@@ -2,7 +2,11 @@
   <nav>
     <ul>
       <li *ngFor="let update of updates">
-        <a (click)="selectVersion(update)">{{ update.version }}</a>
+        <a
+          (click)="selectVersion(update)"
+          [ngClass]="{ active: update.version === selectedVersion?.version }"
+          >{{ update.version }}</a
+        >
       </li>
     </ul>
   </nav>

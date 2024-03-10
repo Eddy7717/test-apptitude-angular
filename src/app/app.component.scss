@@ -1,5 +1,9 @@
 $primaryColor: var(--primaryColor);
 
+.active {
+  color: $primaryColor;
+  background: white;
+}
 .container {
   display: flex;
   nav {
