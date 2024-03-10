@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --primaryColor: rgb(18, 133, 205);
+}
+$primaryColor: var(--primaryColor);
+
+button {
+  border: solid 2.5px $primaryColor;
+  color: $primaryColor;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  text-transform: capitalize;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  & + button {
+    margin: 0.5rem 0 0.5rem 1rem;
+  }
+}
