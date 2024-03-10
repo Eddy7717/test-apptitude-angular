@@ -3,7 +3,12 @@ import { UpdateService } from './services/update.service';
 import { UpdatePackage } from './models/update-package.interface';
 import { RootServiceModule } from './module/root-service.module';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationExtras } from '@angular/router';
+import {
+  Router,
+  NavigationExtras,
+  ActivatedRoute,
+  Params,
+} from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,7 +22,11 @@ export class AppComponent implements OnInit {
   updates: UpdatePackage[];
   selectedVersion: UpdatePackage | null;
 
-  constructor(private updateService: UpdateService, private router: Router) {
+  constructor(
+    private updateService: UpdateService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.updates = [];
     this.selectedVersion = null;
   }
@@ -25,7 +34,16 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.updateService.getUpdates().subscribe((updates) => {
       this.updates = updates;
-      this.selectedVersion = updates[0];
+      this.route.queryParams.subscribe((params: Params) => {
+        const versionParam = params['version'];
+        if (versionParam) {
+          this.selectedVersion =
+            this.updates.find((update) => update.version === versionParam) ||
+            null;
+        } else {
+          this.selectedVersion = updates[0];
+        }
+      });
     });
   }
   selectVersion(update: UpdatePackage): void {
